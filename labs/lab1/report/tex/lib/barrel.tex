@@ -16,6 +16,15 @@
 \usepackage{multicol}
 \usepackage{float}
 \usepackage{tabularx}
+
+\usepackage{tabularray}
+\DeclareTblrTemplate{contfoot-text}{normal}{Продолжение на следующей странице}
+\SetTblrTemplate{contfoot-text}{normal}
+\DeclareTblrTemplate{conthead-text}{normal}{(Продолженная)}
+\SetTblrTemplate{conthead-text}{normal}
+
+\UseTblrLibrary{amsmath}
+
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{indentfirst}

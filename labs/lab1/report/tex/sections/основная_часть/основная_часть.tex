@@ -20,22 +20,21 @@
 \end{enumerate}
 используя таблицу значений \ref{table:values}.
 
-
-{
-    \renewcommand{\arraystretch}{1.8}
-    \begin{table}[H]
-        \centering
-        \caption{Точки $(x_i,y_i)$ для построения интерполяционного многочлена}
-        \label{table:values}
-        \begin{tabularx}{400pt}{|Y|Y|Y|Y|Y|Y|}
-            \hline
-            $x_i$ & $1.41$ & $2.31$ & $4.13$ & $5.31$ & $6.01$\\
-            \hline
-            $y_i$ & $-1.4156$ & $2.3901$ & $3.0567$ & $0.9812$ & $2.7569$\\
-            \hline
-        \end{tabularx}
-    \end{table}
-}
+\begin{table}[H]
+    \centering
+    \caption{Значения $x_i,y_i$ для построения интерполяционного многочлена}
+    \label{table:values}
+    \begin{tblr}{
+        colspec = {X[-1,l]X[c]X[c]X[c]X[c]X[c]|},
+        hlines,
+        vlines,
+        rows = {abovesep=8pt,belowsep=8pt, $},
+        column{1} = {leftsep=8pt},
+        }
+        x_i & 1.41    & 2.31   & 4.13   & 5.31   & 6.01   \\
+        y_i & -1.4156 & 2.3901 & 3.0567 & 0.9812 & 2.7569 \\
+    \end{tblr}
+\end{table}
 
 \subsubsection*{а) с помощью многочлена Лагранжа}
 
@@ -191,37 +190,36 @@ P_n^{(2)}(x) = f(x_n) + f(x_{n-1};x_n)(x - x_n) + f (x_{n-2};x_{n-1};x_n)(x - x_
 
 Составим таблицу разделённых разностей (табл. \ref{table:diff}).
 
-{
-    \renewcommand{\arraystretch}{1.5}
-    \begin{table}[H]
-        \centering
-        \caption{Таблица разделённых разностей}
-        \label{table:diff}
-        \begin{tabularx}{450pt}{|Y|Y|Y|Y|Y|Y|}
-            \hline
-            \small$x_i$ & \small$f(x_i)$ & \small$f(x_i;x_{i+1})$ & \footnotesize$f(x_i;\dots;x_{i+2})$ & \footnotesize$f(x_i;\dots;x_{i+3})$ & \footnotesize$f(x_i;\dots;x_{i+4})$ \\
-            \hline
-            1.4100 & -1.4156 &         &         &         &  \\
-            \hline
-                   &         & 4.2286  &         &         & \\
-            \hline
-            2.3100 &  2.3901 &         & -1.4200 &         &  \\
-            \hline
-                   &         & 0.3663  &         & 0.1825  & \\
-            \hline
-            4.1300 &  3.0567 &         & -0.7084 &         & 0.1362 \\
-            \hline
-                   &         & -1.7589 &         & 0.8090  & \\
-            \hline
-            5.3100 &  0.9812 &         & 2.2849  &         & \\
-            \hline
-                   &         & 2.5367  &         &         & \\
-            \hline
-            6.0100 &  2.7569 &         &         &         & \\
-            \hline
-        \end{tabularx}
-    \end{table}
-}
+\begin{table}[H]
+    \centering
+    \caption{Таблица разделённых разностей}
+    \label{table:diff}
+    \begin{tblr}{
+        colspec = {X[c]X[c]X[c]X[c]X[c]X[c]},
+        hlines,
+        vlines,
+        rows = {abovesep=5pt,belowsep=5pt, $},
+        cell{1}{2-3} = {font=\small},
+        cell{1}{4-6} = {font=\footnotesize}
+    }
+        x_i &
+        f(x_i) &
+        f(x_i;x_{i+1}) &
+        f(x_i;\dots;x_{i+2}) &
+        f(x_i;\dots;x_{i+3}) &
+        f(x_i;\dots;x_{i+4}) \\
+
+        1.4100 & -1.4156 &         &         &         &        \\
+               &         &  4.2286 &         &         &        \\
+        2.3100 &  2.3901 &         & -1.4200 &         &        \\
+               &         &  0.3663 &         & 0.1825  &        \\
+        4.1300 &  3.0567 &         & -0.7084 &         & 0.1362 \\
+               &         & -1.7589 &         & 0.8090  &        \\
+        5.3100 &  0.9812 &         &  2.2849 &         &        \\
+               &         &  2.5367 &         &         &        \\
+        6.0100 &  2.7569 &         &         &         &        \\
+    \end{tblr}
+\end{table}
 
 На листинге \ref{lst:task2_t} приведена программа, вычисляющая данную таблицу.
 
@@ -311,20 +309,21 @@ P_6^{(2)}(x^{(2)}) = P_6^{(2)}(2.11) = 1.671522 \approx 1.67.
 Для заданной табличной функции $f(x) = \arccos(\log_2(\frac{x}{2}))$ требуется вычислить значение функции в точках интерполяции $x^{(1)}= 1.32$ и $x^{(2)}= 3.84$, с помощью подходяшего многочленоа Ньютона с конечными разностями, и наиболее подходящего
 из многочленов Гаусса, Стирлинга или Бесселя в точке $x = 2.2$.
 
-Соотавим таблицу \ref{table:values_2} значений функции на отрезке $[0;5]$ с шагом $h = 1$.
+Соотавим таблицу \ref{table:values_2} значений функции на отрезке $[1;4]$ с шагом $h = 0.5$.
 
-{
-    \renewcommand{\arraystretch}{1.8}
-    \begin{table}[H]
-        \centering
-        \caption{Значения функции $f$ на отрезке $[0;5]$ с шаром $h = 1$}
-        \label{table:values_2}
-        \begin{tabularx}{400pt}{|Y|Y|Y|Y|Y|Y|Y|}
-            \hline
-            $x_i$ & $1.41$    & $2.31$   & $4.13$   & $5.31$   & $6.01$    & $6.01$\\
-            \hline
-            $y_i$ & $-1.4156$ & $2.3901$ & $3.0567$ & $0.9812$ & $2.7569$  & $6.01$\\
-            \hline
-        \end{tabularx}
-    \end{table}
-}
+
+\begin{table}[H]
+    \centering
+    \caption{Значения функции $f$ на отрезке $[1;4]$ с шаром $h = 0.5$}
+    \label{table:values_2}
+    \begin{tblr}{
+        colspec = {X[-1,l]X[c]X[c]X[c]X[c]X[c]X[c]X[c]},
+        hlines,
+        vlines,
+        rows = {abovesep=8pt,belowsep=8pt, $},
+        column{1} = {leftsep=8pt},
+        }
+        x_i & 1.0000 & 1.5000 & 2.0000 & 2.5000 & 3.0000 & 3.5000 & 4.0000 \\
+        y_i & 3.1416 & 1.9988 & 1.5708 & 1.2430 & 0.9460 & 0.6311 &      0 \\
+    \end{tblr}
+\end{table}
