@@ -1,0 +1,210 @@
+\section*{Приложение A. Исходный код всех программ, использовавшихся в лабораторной работе (в комментариях приведены названия файлов)}
+\addcontentsline{toc}{section}{Приложение A. Исходный код всех программ, использовавшихся в лабораторной работе (в комментариях приведены названия файлов)}
+
+
+\begin{lstlisting}[language=MATLAB, numbers=left, basicstyle=\ttfamily\scriptsize]
+% ** task1a.m **
+x = [1.41, 2.31, 4.13, 5.31, 6.01];
+y = [-1.4156, 2.3901, 3.0567, 0.9812, 2.7569];
+
+x_interp = 4.96;
+L = 0;
+
+n = length(x);
+for i = 1:n
+    L_i = 1;
+    for j = 1:n;
+        if i ~= j
+            L_i = L_i * (x_interp - x(j)) / (x(i) - x(j))
+        end
+    end
+    L = L + y(i) * L_i
+end
+
+
+fprintf('%f\n', L)
+
+% ** task1b.m **
+x = [1.41, 2.31, 4.13, 5.31, 6.01];
+y = [-1.4156, 2.3901, 3.0567, 0.9812, 2.7569];
+
+x_interp = 4.96;
+L = 0;
+n = length(x);
+
+for i = 1:n
+    L_i = 1;
+    for j = 1:n;
+        if i ~= j
+            L_i = L_i * (x_interp - x(j)) / (x(i) - x(j))
+        end
+    end
+    L = L + y(i) * L_i
+end
+
+
+fprintf('%f\n', L)
+
+% ** task2_t.m **
+
+x = [1.41, 2.31, 4.13, 5.31, 6.01];
+y = [-1.4156, 2.3901, 3.0567, 0.9812, 2.7569];
+
+function D = calcDivDiffTable(x, y)
+    n = length(x);
+    D = zeros(n, n+1);
+    D(:, 1) = x';
+    D(:, 2) = y';
+
+    for j = 3:n+1
+        for i = 1:n-j+2
+            D(i, j) = (D(i+1, j-1) - D(i, j-1)) / (D(i+j-2, 1) - D(i, 1));
+        end
+    end
+end
+
+D = calcDivDiffTable(x, y);
+
+disp('Divided Difference Table:');
+disp(D);
+
+% ** task2_1.m **
+
+x = [1.41, 2.31, 4.13, 5.31, 6.01];
+y = [-1.4156, 2.3901, 3.0567, 0.9812, 2.7569];
+
+function D = calcDivDiffTable(x, y)
+    n = length(x);
+    D = zeros(n, n+1);
+    D(:, 1) = x';
+    D(:, 2) = y';
+
+    for j = 3:n+1
+        for i = 1:n-j+2
+            D(i, j) = (D(i+1, j-1) - D(i, j-1)) / (D(i+j-2, 1) - D(i, 1));
+        end
+    end
+end
+
+D = calcDivDiffTable(x, y);
+n = length(x);
+x_interp = 6.17;
+
+P = D(n, 2);
+term = 1;
+
+for i = 1:n-1
+    term = term * (x_interp - x(n-i+1));
+    P = P + D(n-i, i+2) * term;
+end
+
+fprintf('%f\n', P)
+
+% ** task2_2.m **
+
+x = [1.41, 2.31, 4.13, 5.31, 6.01];
+y = [-1.4156, 2.3901, 3.0567, 0.9812, 2.7569];
+
+function D = calcDivDiffTable(x, y)
+    n = length(x);
+    D = zeros(n, n+1);
+    D(:, 1) = x';
+    D(:, 2) = y';
+
+    for j = 3:n+1
+        for i = 1:n-j+2
+            D(i, j) = (D(i+1, j-1) - D(i, j-1)) / (D(i+j-2, 1) - D(i, 1));
+        end
+    end
+end
+
+D = calcDivDiffTable(x, y);
+n = length(x);
+x_interp = 2.11;
+
+P = D(1, 2);
+term = 1;
+
+for i = 1:n-1
+    term = term * (x_interp - x(i));
+    P = P + D(1, i+2) * term;
+end
+
+fprintf('%f\n', P)
+
+% ** task3_values.m **
+
+nodes = 7;
+
+V = zeros(2, nodes);
+h = 0.5;
+
+for i = 1:nodes
+    x = 1 + (i - 1) * h;
+    V(1, i) = x;
+    V(2, i) = acos(log2(x / 2));
+end
+
+first = V(1, 1);
+last = V(1, end);
+
+disp(V);
+
+% ** task3_1.m **
+
+% Adds values table and calculates finite difference table
+addpath('./task3_t.m');
+
+x_interp = 1.32;
+
+n = length(D(1, :));
+P = D(1, 2);
+q = (x_interp - first) / h;
+term = 1;
+
+for i = 3:n
+    term = term * (q - (i - 2) + 1);
+    P = P + D(1, i) * term / factorial(i - 2);
+end
+disp(P);
+
+% ** task3_2.m **
+
+% Adds values table and calculates finite difference table
+addpath('./task3_t.m');
+
+x_interp = 3.84;
+
+n = length(D(1, :));
+m = length(D(:, 1));
+P = D(m, 2);
+q = (x_interp - last) / h;
+term = 1;
+
+for i = 3:n
+    i_shifted = i - 2;
+    term = term * (q + i_shifted - 1);
+    P = P + D(m - i_shifted, i) * term / factorial(i_shifted);
+end
+disp(P);
+
+% ** task3_3.m **
+
+% Adds values table and calculates finite difference table
+addpath('./task3_t.m');
+
+x_interp = 2.2;
+a = 2.0;
+n = 5;
+q = (x_interp - a) / h;
+
+P = (D(3, 2) + D(4, 2)) / 2 + (q - 0.5) / factorial(1) ...
+    * D(3, 3) + q * (q - 1) / factorial(2) * (D(2, 4) + D(3, 4)) / 2 ...
+    + (q - 1/2) * q * (q - 1) / factorial(3) * D(2, 5) ...
+    + q * (q - 1) * (q + 1) * (q - 2) / factorial(4) ...
+    * (D(1, 6) + D(2, 6)) / 2 ...
+    + (q - 1/2) * q * (q - 1) * (q + 1) * (q - 2) / factorial(5) ...
+    * D(1, 7);
+
+disp(P);
+\end{lstlisting}
