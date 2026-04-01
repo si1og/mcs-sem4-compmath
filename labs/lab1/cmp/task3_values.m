@@ -1,8 +1,15 @@
-V = zeros(2, 7)
+nodes = 7;
 
-for i = 1:7
-    V(1, i) = 0.5 + i / 2
-    V(2, i) = acos(log2((0.5 + i / 2)/2))
+V = zeros(2, nodes);
+h = 0.5;
+
+for i = 1:nodes
+    x = 1 + (i - 1) * h;
+    V(1, i) = x;
+    V(2, i) = acos(log2(x / 2));
 end
 
-% disp(V);
+first = V(1, 1);
+last = V(1, end);
+
+disp(V);

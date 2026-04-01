@@ -5,7 +5,7 @@ x_interp = 1.32;
 
 n = length(D(1, :));
 P = D(1, 2);
-q = (x_interp - 1) / 0.5;
+q = (x_interp - first) / h;
 term = 1;
 
 for i = 3:n
