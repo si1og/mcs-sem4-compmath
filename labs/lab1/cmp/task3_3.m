@@ -1,17 +1,17 @@
 % Adds values table and calculates finite difference table
 addpath('./task3_t.m'); 
 
-x_interp = 3.84;    
+x_interp = 2.2;
+a = 2.0;
+n = 5;
+q = (x_interp - a) / h;
 
-n = length(D(1, :));
-m = length(D(:, 1));
-P = D(m, 2);
-q = (x_interp - last) / h;
-term = 1;
+P = (D(3, 2) + D(4, 2)) / 2 + (q - 0.5) / factorial(1) ...
+    * D(3, 3) + q * (q - 1) / factorial(2) * (D(2, 4) + D(3, 4)) / 2 ...
+    + (q - 1/2) * q * (q - 1) / factorial(3) * D(2, 5) ...
+    + q * (q - 1) * (q + 1) * (q - 2) / factorial(4) ...
+    * (D(1, 6) + D(2, 6)) / 2 ...
+    + (q - 1/2) * q * (q - 1) * (q + 1) * (q - 2) / factorial(5) ...
+    * D(1, 7);
 
-for i = 3:n
-    i_shifted = i - 2;
-    term = term * (q + i_shifted - 1);
-    P = P + D(m - i_shifted, i) * term / factorial(i_shifted);
-end
 disp(P);
