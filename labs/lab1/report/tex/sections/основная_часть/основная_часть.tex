@@ -53,7 +53,11 @@ L_n(x)=\frac{(x- x_1) \dots (x- x_n)}{(x_0 - x_1) \dots (x_0 - x_n)} y_0+ \dots 
 L_n(x)= \sum_{i=0}^{n} y_i l_{n,i}(x), \quad \text{где } l_{n,i}(x)= \prod_{\substack{j=0 \\ j \neq i}}^{n} \frac{x- x_j}{x_i - x_j}.
 \]
 
-\begin{lstlisting}[language=MATLAB, caption={Вычисление интерполяционного многочлена Лагранжа в точке 4.96}, numbers=left]
+\begin{listing}[H]
+\caption{Вычисление интерполяционного многочлена Лагранжа в точке 4.96}
+\vspace{-20pt}
+\label{lst:task1_lagrange}
+\begin{minted}[linenos, numbersep=10pt, firstnumber=1]{matlab}
 x = [1.41, 2.31, 4.13, 5.31, 6.01];
 y = [-1.4156, 2.3901, 3.0567, 0.9812, 2.7569];
 
@@ -73,7 +77,8 @@ end
 
 
 fprintf('%f\n', L)
-\end{lstlisting}
+\end{minted}
+\end{listing}
 
 В результате работы программы было полученно приблизательное значение функции в точке $x = 4.96$.
 
@@ -112,7 +117,11 @@ L_n(x) = L_n^{0,\dots,n}(x)= \frac{1}{x_{n} - x_0} \begin{vmatrix} L_{n-1}^{0,\d
 
 На листинге \ref{lst:task2} приведён код программы, вычисляющей приближённое значение функции в точке $x=4.96$ методом Эйткена.
 
-\begin{lstlisting}[language=MATLAB, caption={Реализация вычислительной схемы Эйткена в MATLAB}, label={lst:task2}, numbers=left]
+\begin{listing}[H]
+\caption{Реализация вычислительной схемы Эйткена в MATLAB}
+\vspace{-20pt}
+\label{lst:task2}
+\begin{minted}[linenos, numbersep=10pt, firstnumber=1]{matlab}
 x = [1.41, 2.31, 4.13, 5.31, 6.01];
 y = [-1.4156, 2.3901, 3.0567, 0.9812, 2.7569];
 
@@ -133,7 +142,8 @@ end
 
 result = L_table(1, n);
 fprintf('%f\n', result);
-\end{lstlisting}
+\end{minted}
+\end{listing}
 
 В результате работы программы было полученно приблизательное значение функции в точке $x = 4.96$.
 
@@ -225,7 +235,11 @@ P_n^{(2)}(x) = f(x_n) + f(x_{n-1};x_n)(x - x_n) + f (x_{n-2};x_{n-1};x_n)(x - x_
 
 На листинге \ref{lst:task2_t} приведена программа, вычисляющая данную таблицу.
 
-\begin{lstlisting}[language=MATLAB, caption={Вычисление таблицы разделённых разностей}, label={lst:task2_t}, numbers=left]
+\begin{listing}[H]
+\caption{Вычисление таблицы разделённых разностей}
+\vspace{-20pt}
+\label{lst:task2_t}
+\begin{minted}[linenos, numbersep=10pt, firstnumber=1]{matlab}
 x = [1.41, 2.31, 4.13, 5.31, 6.01];
 y = [-1.4156, 2.3901, 3.0567, 0.9812, 2.7569];
 
@@ -246,13 +260,18 @@ D = calcDivDiffTable(x, y);
 
 disp('Divided Difference Table:');
 disp(D);
-\end{lstlisting}
+\end{minted}
+\end{listing}
 
 Рассмотрим указанные в задании точки $x^{(1)} = 6.17$ и $x^{(2)} = 2.11$. Точка $x^{(1)}$ находится близко к концу таблицы, следовательно, для вычисления значения функции в ней следует использовать многочлен Ньютона второго вида.
 
 На листинге \ref{lst:task2_1} приведён код программы, вычисляющий значение функции в точке $x^{(1)} = 6.17$ с помощью интерполяционного многочлена Ньютона второго вида.
 
-\begin{lstlisting}[language=MATLAB, caption={Вычисление значения функции в точке $x^{(1)} = 6.17$ помощью многочлена Ньютона второго вида}, label={lst:task2_1}, numbers=left]
+\begin{listing}[H]
+\caption{Вычисление значения функции в точке $x^{(1)} = 6.17$ помощью многочлена Ньютона второго вида}
+\vspace{-20pt}
+\label{lst:task2_1}
+\begin{minted}[linenos, numbersep=10pt, firstnumber=1]{matlab}
 x = [1.41, 2.31, 4.13, 5.31, 6.01];
 y = [-1.4156, 2.3901, 3.0567, 0.9812, 2.7569];
 
@@ -269,7 +288,8 @@ for i = 1:n-1
 end
 
 fprintf('%f\n', P)
-\end{lstlisting}
+\end{minted}
+\end{listing}
 
 Таким образом,
 
@@ -281,7 +301,11 @@ P_6^{(1)}(x^{(1)}) = P_6^{(1)}(6.17) = 3.851845 \approx 3.85.
 
 На листинге \ref{lst:task2_2} приведён код программы, вычисляющий значение функции в точке $x^{(2)}$ с помощью интерполяционного многочлена Ньютона первого вида.
 
-\begin{lstlisting}[language=MATLAB, caption={Вычисление значения функции в точке $x^{(2)} = 2.11$ с помощью многочлена Ньютона первого вида}, label={lst:task2_2}, numbers=left]
+\begin{listing}[H]
+\caption{Вычисление значения функции в точке $x^{(2)} = 2.11$ с помощью многочлена Ньютона первого вида}
+\vspace{-20pt}
+\label{lst:task2_2}
+\begin{minted}[linenos, numbersep=10pt, firstnumber=1]{matlab}
 x = [1.41, 2.31, 4.13, 5.31, 6.01];
 y = [-1.4156, 2.3901, 3.0567, 0.9812, 2.7569];
 
@@ -298,7 +322,8 @@ for i = 1:n-1
 end
 
 fprintf('%f\n', P)
-\end{lstlisting}
+\end{minted}
+\end{listing}
 
 Таким образом,
 
@@ -332,11 +357,11 @@ P_6^{(2)}(x^{(2)}) = P_6^{(2)}(2.11) = 1.671522 \approx 1.67.
 
 На листинге \ref{lst:task3_values} приведена пограмма, вычисляющая таблицу знчений функции $f$.
 
-\begin{lstlisting}[
-    language=MATLAB,
-    caption={Вычисление таблицы значений для функции $f(x) = \arccos(\log_2(\frac{x}{2}))$},
-    label={lst:task3_values}, numbers=left
-]
+\begin{listing}[H]
+\caption{Вычисление таблицы значений для функции $f(x) = \arccos(\log_2(\frac{x}{2}))$}
+\vspace{-20pt}
+\label{lst:task3_values}
+\begin{minted}[linenos, numbersep=10pt, firstnumber=1]{matlab}
 nodes = 7;
 
 V = zeros(2, nodes);
@@ -352,7 +377,8 @@ first = V(1, 1);
 last = V(1, end);
 
 disp(V);
-\end{lstlisting}
+\end{minted}
+\end{listing}
 
 
 Пусть функция $y = f(x)$ задана таблицей, в которой узлы идут в возрастающем порядке с постоянным шагом $h = x_i - x_{i-1}$ ($x_i = x_0 + ih, i = 0, 1, \dots, n.$). Тогда для $f$ можно вычислить конечные разности.
@@ -436,11 +462,11 @@ q = \frac{x-x_n}{h}.
 
 На листинге \ref{lst:task3_t} приведена пограмма, вычисляющая данную таблицу.
 
-\begin{lstlisting}[
-    language=MATLAB,
-    caption={Вычисление таблицы конечных разностей на основе таблицы значений для функции $f(x) = \arccos(\log_2(\frac{x}{2}))$},
-    label={lst:task3_t}, numbers=left
-]
+\begin{listing}[H]
+\caption{Вычисление таблицы конечных разностей на основе таблицы значений для функции $f(x) = \arccos(\log_2(\frac{x}{2}))$}
+\vspace{-20pt}
+\label{lst:task3_t}
+\begin{minted}[linenos, numbersep=10pt, firstnumber=1]{matlab}
 % Adds values table
 addpath('./task3_values.m');
 
@@ -459,15 +485,16 @@ end
 
 D = calcFinDiffTable(V);
 disp(D);
-\end{lstlisting}
+\end{minted}
+\end{listing}
 
 Точка $x^{(1)} = 1.32$ находится ближе к началу таблице значений функции $f$, следовательно, для вычисления значения функции в ней стоит следует использовать многочлен Ньютона первого вида. На листинге \ref{lst:task3_1} предаствлена программа, вычисляющая значение функции в точке $x^{(1)} = 1.32$.
 
-\begin{lstlisting}[
-    language=MATLAB,
-    caption={Вычисление значения функции $f$ в точке $x^{(1)} = 1.32$ с помощью интерполяционного многочлена Ньютона первого вида},
-    label={lst:task3_1}, numbers=left
-]
+\begin{listing}[H]
+\caption{Вычисление значения функции $f$ в точке $x^{(1)} = 1.32$ с помощью интерполяционного многочлена Ньютона первого вида}
+\vspace{-20pt}
+\label{lst:task3_1}
+\begin{minted}[linenos, numbersep=10pt, firstnumber=1]{matlab}
 % Adds values table and calculates finite difference table
 addpath('./task3_t.m');
 
@@ -483,7 +510,8 @@ for i = 3:n
     P = P + D(1, i) * term / factorial(i - 2);
 end
 disp(P);
-\end{lstlisting}
+\end{minted}
+\end{listing}
 
 Таким образом,
 
@@ -493,11 +521,11 @@ P_7(1.32) = 2.2643 \approx 2.26.
 
 Точка  $x^{(2)} = 3.84$, напротив, находится ближе к концу таблицы заченений функции $f$, следовательно, для вычисления значения функции в ней следует использовать многочлен Ньютона второго вида. На листинге \ref{lst:task3_2} предаствлена программа, вычисляющая значение функции в точке $x^{(2)} = 3.84$.
 
-\begin{lstlisting}[
-    language=MATLAB,
-    caption={Вычисление значения функции $f$ в точке $x^{(2)} = 3.84$ с помощью интерполяционного многочлена Ньютона второго вида},
-    label={lst:task3_2}, numbers=left
-]
+\begin{listing}[H]
+\caption{Вычисление значения функции $f$ в точке $x^{(2)} = 3.84$ с помощью интерполяционного многочлена Ньютона второго вида}
+\vspace{-20pt}
+\label{lst:task3_2}
+\begin{minted}[linenos, numbersep=10pt, firstnumber=1]{matlab}
 % Adds values table and calculates finite difference table
 addpath('./task3_t.m');
 
@@ -515,7 +543,8 @@ for i = 3:n
     P = P + D(m - i_shifted, i) * term / factorial(i_shifted);
 end
 disp(P);
-\end{lstlisting}
+\end{minted}
+\end{listing}
 
 Таким образом,
 
@@ -600,11 +629,11 @@ P_7(3.84) = 0.267 \approx 0.27.
 
 На листинге \ref{lst:task3_3} приведена прогамма, вычисляющая значение многочлена Бесселя для заданных значений $x = 2.2, a = 2.0, h = 0.5$ и таблице конечных разностей \ref{table:bess}.
 
-\begin{lstlisting}[
-    language=MATLAB,
-    caption={прогамма, вычисляющая значение многочлена Бесселя},
-    label={lst:task3_3}, numbers=left
-]
+\begin{listing}[H]
+\caption{программа, вычисляющая значение многочлена Бесселя}
+\vspace{-20pt}
+\label{lst:task3_3}
+\begin{minted}[linenos, numbersep=10pt, firstnumber=1]{matlab}
 % Adds values table and calculates finite difference table
 addpath('./task3_t.m');
 
@@ -622,7 +651,8 @@ P = (D(3, 2) + D(4, 2)) / 2 + (q - 0.5) / factorial(1) ...
     * D(1, 7);
 
 disp(P);
-\end{lstlisting}
+\end{minted}
+\end{listing}
 
 Таким образом,
 
