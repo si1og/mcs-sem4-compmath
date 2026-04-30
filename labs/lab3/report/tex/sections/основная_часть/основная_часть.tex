@@ -1,0 +1,246 @@
+\section{Задание}
+Для данной таблицы значений функции построить методом наименьших квадратов линейную и квадратичную полиномиальные модели, вычислить наилучшие среднеквадратические отклонения.
+
+\section{Цель работы}
+Научиться строить полиномиальные аналитические модели табличных функций методом наименьших квадратов.
+
+\section{Ход работы}
+\textit{Перед выполнением работы отметим, что все исходные данные взяты из варианта 47.} Исходные данные представлены в таблице \ref{table:values}.
+
+\begin{table}[H]
+    \centering
+    \caption{Исходные значения $x_i, y_i$ (вариант 47)}
+    \label{table:values}
+    \begin{tblr}{
+        colspec = {X[-1,l]X[c]X[c]X[c]X[c]X[c]X[c]X[c]X[c]X[c]X[c]},
+        hlines,
+        vlines,
+        rows = {abovesep=5pt, belowsep=5pt, font=\small, $},
+        column{1} = {leftsep=8pt},
+    }
+        x_i & -2.0 & -1.9 & -1.8 & -1.7 & -1.6 & -1.5 & -1.4 & -1.3 & -1.2 & -1.1 \\
+        y_i & 12.28 & 12.53 & 12.50 & 12.53 & 12.75 & 12.85 & 12.77 & 12.76 & 12.73 & 12.85 \\
+    \end{tblr}
+
+    \vspace{6pt}
+
+    \begin{tblr}{
+        colspec = {X[-1,l]X[c]X[c]X[c]X[c]X[c]X[c]X[c]X[c]X[c]X[c]},
+        hlines,
+        vlines,
+        rows = {abovesep=5pt, belowsep=5pt, font=\small, $},
+        column{1} = {leftsep=8pt},
+    }
+        x_i & -1.0 & -0.9 & -0.8 & -0.7 & -0.6 & -0.5 & -0.4 & -0.3 & -0.2 & -0.1 \\
+        y_i & 12.51 & 12.34 & 12.22 & 11.84 & 11.67 & 11.27 & 11.06 & 10.73 & 10.35 & 10.09 \\
+    \end{tblr}
+\end{table}
+
+\subsection{Метод наименьших квадратов}
+
+Пусть функция $y = f(x)$ задана таблицей значений $\{(x_i, y_i)\}_{i=1}^{n}$. Требуется найти полином $P_m(x) = a_0 + a_1 x + \dots + a_m x^m$, наилучшим образом приближающий табличные данные. Коэффициенты $a_0, a_1, \dots, a_m$ определяются из условия минимума суммы квадратов отклонений:
+\[
+S(a_0, \dots, a_m) = \sum_{i=1}^{n} \left(y_i - \sum_{j=0}^{m} a_j x_i^j \right)^2 \to \min.
+\]
+
+Приравнивая частные производные $\frac{\partial S}{\partial a_k}$ к нулю, получаем нормальную систему:
+\[
+\sum_{j=0}^{m} a_j \sum_{i=1}^{n} x_i^{j+k} = \sum_{i=1}^{n} y_i x_i^k, \quad k = 0, \dots, m.
+\]
+
+Наилучшее среднеквадратическое отклонение вычисляется по формуле
+\[
+\delta_2(P_m) = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - P_m(x_i))^2}.
+\]
+
+\subsection{Линейная аппроксимация}
+
+Ищем $P_1(x) = a_0 + a_1 x$. Нормальная система принимает вид
+\[
+\begin{cases}
+a_0 n + a_1 \displaystyle\sum_{i=1}^{n} x_i = \displaystyle\sum_{i=1}^{n} y_i, \\[10pt]
+a_0 \displaystyle\sum_{i=1}^{n} x_i + a_1 \displaystyle\sum_{i=1}^{n} x_i^2 = \displaystyle\sum_{i=1}^{n} y_i \, x_i.
+\end{cases}
+\]
+
+\noindentРешаем систему методом Крамера. Определитель матрицы системы:
+\[
+\Delta = \begin{vmatrix}
+n & \sum x_i \\
+\sum x_i & \sum x_i^2
+\end{vmatrix}.
+\]
+
+\noindentОпределители для нахождения коэффициентов:
+\[
+\Delta_0 = \begin{vmatrix}
+\sum y_i & \sum x_i \\
+\sum y_i x_i & \sum x_i^2
+\end{vmatrix}, \quad
+\Delta_1 = \begin{vmatrix}
+n & \sum y_i \\
+\sum x_i & \sum y_i x_i
+\end{vmatrix}.
+\]
+
+\noindentКоэффициенты:
+\[
+a_0 = \frac{\Delta_0}{\Delta}, \quad a_1 = \frac{\Delta_1}{\Delta}.
+\]
+
+\noindentНа листинге \ref{lst:linear} приведена программа, строящая линейную модель МНК.
+
+\vspace{10pt}
+\captionof{listing}{Построение линейной модели МНК}
+\label{lst:linear}
+\vspace{-10pt}
+\begin{minted}[linenos, numbersep=10pt, firstnumber=1]{matlab}
+x = [-2.0, -1.9, -1.8, -1.7, -1.6, -1.5, -1.4, -1.3, -1.2, -1.1, ...
+     -1.0, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1];
+y = [12.28, 12.53, 12.50, 12.53, 12.75, 12.85, 12.77, 12.76, 12.73, 12.85, ...
+     12.51, 12.34, 12.22, 11.84, 11.67, 11.27, 11.06, 10.73, 10.35, 10.09];
+
+n = length(x);
+
+A = [n,        sum(x);
+     sum(x),   sum(x.^2)];
+b = [sum(y); sum(x .* y)];
+
+D = det(A);
+
+A0 = A; A0(:, 1) = b;
+A1 = A; A1(:, 2) = b;
+
+a0 = det(A0) / D;
+a1 = det(A1) / D;
+
+fprintf('P_1(x) = %.4f + (%.4f) * x\n', a0, a1);
+
+delta = sqrt(1/n * sum((y - a0 - a1 * x).^2));
+fprintf('delta_2(P_1) = %.4f\n', delta);
+\end{minted}
+
+\noindentНа рис. \ref{fig:task1a.png} предаствлен результат работы программы.
+
+\screenshot[.6]{task1a.png}{Результат работы программы, строящей линейную модель МНК}
+
+\noindentВ результате работы программы были получкны следующие коэффициенты:
+
+\[
+a_0 = 10.7529, \quad a_1 = - 1.2177.
+\]
+
+\noindentЛинейная модель выглядит так:
+
+\[
+P_1(x) = 10.75 - 1.22x.
+\]
+
+\noindentНаилучшее среднеквадратическое отклонение:
+\[
+\delta_2(P_1) = 0.48.
+\]
+
+\subsection{Квадратичная аппроксимация}
+
+Ищем $P_2(x) = a_0 + a_1 x + a_2 x^2$. Нормальная система:
+\[
+\begin{cases}
+a_0 n + a_1 \displaystyle\sum_{i=1}^{n} x_i + a_2 \displaystyle\sum_{i=1}^{n} x_i^2 = \displaystyle\sum_{i=1}^{n} y_i, \\[10pt]
+a_0 \displaystyle\sum_{i=1}^{n} x_i + a_1 \displaystyle\sum_{i=1}^{n} x_i^2 + a_2 \displaystyle\sum_{i=1}^{n} x_i^3 = \displaystyle\sum_{i=1}^{n} y_i \, x_i, \\[10pt]
+a_0 \displaystyle\sum_{i=1}^{n} x_i^2 + a_1 \displaystyle\sum_{i=1}^{n} x_i^3 + a_2 \displaystyle\sum_{i=1}^{n} x_i^4 = \displaystyle\sum_{i=1}^{n} y_i \, x_i^2.
+\end{cases}
+\]
+
+\noindentРешаем систему методом Крамера. Определитель матрицы системы:
+\[
+\Delta = \begin{vmatrix}
+n & \sum x_i & \sum x_i^2 \\
+\sum x_i & \sum x_i^2 & \sum x_i^3 \\
+\sum x_i^2 & \sum x_i^3 & \sum x_i^4
+\end{vmatrix}.
+\]
+
+\noindentОпределители для нахождения коэффициентов:
+\begin{gather*}
+\Delta_0 = \begin{vmatrix}
+\sum y_i & \sum x_i & \sum x_i^2 \\
+\sum y_i x_i & \sum x_i^2 & \sum x_i^3 \\
+\sum y_i x_i^2 & \sum x_i^3 & \sum x_i^4
+\end{vmatrix}, \quad
+\Delta_1 = \begin{vmatrix}
+n & \sum y_i & \sum x_i^2 \\
+\sum x_i & \sum y_i x_i & \sum x_i^3 \\
+\sum x_i^2 & \sum y_i x_i^2 & \sum x_i^4
+\end{vmatrix}, \\[5pt]
+\Delta_2 = \begin{vmatrix}
+n & \sum x_i & \sum y_i \\
+\sum x_i & \sum x_i^2 & \sum y_i x_i \\
+\sum x_i^2 & \sum x_i^3 & \sum y_i x_i^2
+\end{vmatrix}.
+\end{gather*}
+
+Коэффициенты:
+\[
+a_0 = \frac{\Delta_0}{\Delta}, \quad a_1 = \frac{\Delta_1}{\Delta}, \quad a_2 = \frac{\Delta_2}{\Delta}.
+\]
+
+На листинге \ref{lst:quadratic} приведена программа, строящая квадратичную модель МНК.
+
+\vspace{10pt}
+\captionof{listing}{Построение квадратичной модели МНК}
+\label{lst:quadratic}
+\vspace{-10pt}
+\begin{minted}[linenos, numbersep=10pt, firstnumber=1]{matlab}
+x = [-2.0, -1.9, -1.8, -1.7, -1.6, -1.5, -1.4, -1.3, -1.2, -1.1, ...
+     -1.0, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1];
+y = [12.28, 12.53, 12.50, 12.53, 12.75, 12.85, 12.77, 12.76, 12.73, 12.85, ...
+     12.51, 12.34, 12.22, 11.84, 11.67, 11.27, 11.06, 10.73, 10.35, 10.09];
+
+n = length(x);
+
+A = [n,         sum(x),    sum(x.^2);
+     sum(x),    sum(x.^2), sum(x.^3);
+     sum(x.^2), sum(x.^3), sum(x.^4)];
+b = [sum(y); sum(x .* y); sum(x.^2 .* y)];
+
+D = det(A);
+
+A0 = A; A0(:, 1) = b;
+A1 = A; A1(:, 2) = b;
+A2 = A; A2(:, 3) = b;
+
+a0 = det(A0) / D;
+a1 = det(A1) / D;
+a2 = det(A2) / D;
+
+fprintf('P_2(x) = %.4f + (%.4f) * x + (%.4f) * x^2\n', a0, a1, a2);
+
+delta = sqrt(1/n * sum((y - a0 - a1 * x - a2 * x.^2).^2));
+fprintf('delta_2(P_2) = %.4f\n', delta);
+\end{minted}
+
+\noindentНа рис. \ref{fig:task1b.png} предаствлен результат работы программы.
+
+\screenshot[.8]{task1b.png}{Результат работы программы, строящей квадратичную модель МНК}
+
+\noindentВ результате работы программы были получкны следующие коэффициенты:
+
+\[
+a_0 = 9.5155, \quad a_1 = -4.5924, \quad a_2 = -1.6070.
+\]
+
+
+\noindentКвадратичная модель выглядит так:
+\[
+P_2(x) = 9.52 - 4.59x - 1.61x^2.
+\]
+
+\noindentНаилучшее среднеквадратическое отклонение:
+\[
+\delta_2(P_2) = 0.09.
+\]
+
+\section{Вывод}
+
+В результате выполнения лабораторной работы были построены линейная и квадратичная полиномиальные модели табличной функции методом наименьших квадратов. Для каждой модели были найдены коэффициенты путём решения соответствующей нормальной системы уравнений методом Крамера и вычислены наилучшие среднеквадратические отклонения: $\delta_2(P_1) = 0.48$ для линейной модели и $\delta_2(P_2) = 0.09$ для квадратичной. Квадратичная модель даёт значительно меньшее отклонение, что говорит о лучшем приближении табличных данных.
