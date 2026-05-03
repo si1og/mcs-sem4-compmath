@@ -1,19 +1,15 @@
-x = [1.41, 2.31, 4.13, 5.31, 6.01];
-y = [-1.4156, 2.3901, 3.0567, 0.9812, 2.7569];
+f = @(x) x .* sin(x);
 
-x_interp = 4.96;
-L = 0;
-n = length(x);
+a = 0;
+b = pi;
 
-for i = 1:n
-    L_i = 1;
-    for j = 1:n;
-        if i ~= j
-            L_i = L_i * (x_interp - x(j)) / (x(i) - x(j))
-        end
-    end
-    L = L + y(i) * L_i
-end
+h = (b - a) / 3;
+x = [a, a + h, a + 2 * h, b];
+y = f(x);
 
+I_nc = 3 * h / 8 * (y(1) + 3 * y(2) + 3 * y(3) + y(4));
+I_exact = pi;
+error_nc = abs(I_exact - I_nc);
 
-fprintf('%f\n', L)
+fprintf('I_nc = %.6f\n', I_nc);
+fprintf('error_nc = %.6f\n', error_nc);

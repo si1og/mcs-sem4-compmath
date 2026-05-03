@@ -1,24 +1,7 @@
-pkg load symbolic
+f = @(x) abs(x .* sin(x) - 4 .* cos(x));
 
-xd = [1.41, 2.31, 4.13, 5.31, 6.01];
-yd = [-1.4156, 2.3901, 3.0567, 0.9812, 2.7569];
+[x_max, neg_max] = fminbnd(@(x) -f(x), 0, pi);
+M4 = -neg_max;
 
-x_interp = 4.96;
-L = 0;
-
-syms x
-
-n = length(xd);
-for i = 1:n
-    L_i = 1;
-    for j = 1:n;
-        if i ~= j
-            L_i = L_i * (x - xd(j)) / (xd(i) - xd(j))
-        end
-    end
-    L = L + yd(i) * L_i
-    latex(L)
-end
-
-latex_formula = latex(L)
-disp(latex_formula)
+fprintf('x_max = %.4f\n', x_max);
+fprintf('M4 = %.4f\n', M4);
