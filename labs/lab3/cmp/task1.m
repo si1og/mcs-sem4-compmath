@@ -1,12 +1,3 @@
-\section*{Приложение A. Исходный код всех программ, использовавшихся в лабораторной работе (в комментариях приведены названия файлов)}
-\addcontentsline{toc}{section}{Приложение A. Исходный код всех программ, использовавшихся в лабораторной работе (в комментариях приведены названия файлов)}
-
-\renewcommand{\theFancyVerbLine}{%
-    \scriptsize\ttfamily\textcolor{gray}{\arabic{FancyVerbLine}}%
-}
-
-\begin{minted}[linenos, numbersep=10pt, firstnumber=1, fontsize=\scriptsize]{matlab}
-% ** task1.m **
 format long g
 
 x = [0.050, 0.052, 0.060, 0.065, 0.069, 0.075, 0.085, 0.090, 0.096];
@@ -58,4 +49,3 @@ for i = 1:n
     fprintf('%2d   %8.4f   %8.4f   %8.4f   %10.4f\n', ...
         i-1, a(i), bcoef(i), c(i), d(i));
 end
-\end{minted}
