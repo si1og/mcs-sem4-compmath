@@ -1,0 +1,56 @@
+\section*{Приложение A. Исходный код всех программ, использовавшихся в лабораторной работе (в комментариях приведены названия файлов)}
+\addcontentsline{toc}{section}{Приложение A. Исходный код всех программ, использовавшихся в лабораторной работе (в комментариях приведены названия файлов)}
+
+\renewcommand{\theFancyVerbLine}{%
+    \scriptsize\ttfamily\textcolor{gray}{\arabic{FancyVerbLine}}%
+}
+
+\begin{minted}[linenos, numbersep=10pt, firstnumber=1, fontsize=\scriptsize]{matlab}
+% ** task1a.m **
+
+f = @(x) abs(x .* sin(x) - 4 .* cos(x));
+
+[x_max, neg_max] = fminbnd(@(x) -f(x), 0, pi);
+M4 = -neg_max;
+
+fprintf('x_max = %.4f\n', x_max);
+fprintf('M4 = %.4f\n', M4);
+
+% ** task1b.m **
+f = @(x) x .* sin(x);
+
+a = 0;
+b = pi;
+
+h = (b - a) / 3;
+x = [a, a + h, a + 2 * h, b];
+y = f(x);
+
+I_nc = 3 * h / 8 * (y(1) + 3 * y(2) + 3 * y(3) + y(4));
+I_exact = pi;
+error_nc = abs(I_exact - I_nc);
+
+fprintf('I_nc = %.6f\n', I_nc);
+fprintf('error_nc = %.6f\n', error_nc);
+
+% ** task2.m **
+f = @(x) x .* sin(x);
+
+a = 0;
+b = pi;
+
+nodes = [-0.9061798459, -0.5384693101, 0, ...
+          0.5384693101,  0.9061798459];
+weights = [0.2369268851, 0.4786286705, 0.5688888889, ...
+           0.4786286705, 0.2369268851];
+
+x = (a + b) / 2 + (b - a) / 2 * nodes;
+y = f(x);
+
+I_gauss = (b - a) / 2 * sum(weights .* y);
+I_exact = pi;
+error_gauss = abs(I_exact - I_gauss);
+
+fprintf('I_gauss = %.12f\n', I_gauss);
+fprintf('error_gauss = %.12f\n', error_gauss);
+\end{minted}
